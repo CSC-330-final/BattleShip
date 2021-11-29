@@ -19,6 +19,7 @@ public class Player implements IPlayer {
     public Player(int id) {
         this.id = id;
         this.board = new Board();
+        this.opponentBoard = new Board();
         this.scanner = new Scanner(System.in);
     }
 
@@ -35,7 +36,7 @@ public class Player implements IPlayer {
         System.out.printf("%n======== Player %d - Time to place out your ships ========%n", id);
         board.placeShipsOnBoard();
     }
-
+   
     @Override
     public void fireAt(IPlayer opponent) {
         System.out.printf("%n Alright Player %d - Enter coordinates for your attack: ", id);
@@ -43,8 +44,7 @@ public class Player implements IPlayer {
         boolean isPointValid = false;
         while(!isPointValid) {
             try {
-
-                Point point = new Point(scanner.nextInt(), scanner.nextInt());
+                Point point = board.validInputsForDrop(scanner.nextLine(), scanner.nextInt());
                 int x = (int)point.getX() - 1;
                 int y = (int)point.getY() - 1;
                 //inspects opponents board for coordinate
@@ -53,9 +53,10 @@ public class Player implements IPlayer {
                 if(result == Result.PARTIAL_HIT ||  result == Result.DESTROYED) {
                     totalLivesLeft--;
                 }
+//                this.opponentBoard.placeOpponentBoardMarker(x, y, result);
+                this.opponentBoard.printBoard();
                 //Moves to next turn if point is valid
                 isPointValid = true;
-
             } catch(IllegalArgumentException e) {
                 System.out.printf(e.getMessage());
             }

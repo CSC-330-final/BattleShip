@@ -20,7 +20,7 @@ public class Game {
 
         this.players[i].placeShips();
         this.players[j].placeShips();
-
+        
         while(players[0].getTotalLivesLeft() > 0 &&
                 players[1].getTotalLivesLeft() > 0) {
 
