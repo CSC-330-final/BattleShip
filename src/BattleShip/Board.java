@@ -33,7 +33,9 @@ public class Board {
             }
         }
     }
-
+    public char[] getBoardLetters() {
+    	return Board.BOARD_LETTERS;
+    }
     public void placeShipsOnBoard() {
         //to show the board before asking for input
         printBoard();
@@ -55,21 +57,21 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.print("\t");
+    	
+        System.out.print("\n\t");
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.print(BOARD_LETTERS[i] + "\t");
         }
-        System.out.println();
+        System.out.printf("\n\n");
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.print((i + 1) + "\t");
             for (int j = 0; j < BOARD_SIZE; j++) {
                 System.out.print(board[i][j].getIcon() + "\t");
             }
-            System.out.println();
+            System.out.printf("\n\n");
         }
     }
-
     //ships can be placed vertically for horizontally, so we ask the input for an option
     private boolean askValidShipDirection() {
         System.out.printf("%nDo you want to place the ship horizontally (H) or vertically (V)?");
@@ -92,9 +94,11 @@ public class Board {
 
         return from;
     }
-
-
-    private Point validInputsForDrop(String x, int y){
+    protected void placeOpponentBoardMarker(int x, int y, Result result) {
+    	Icons icon = new Icons(result);
+    	board[y][x] = icon;
+    }
+    Point validInputsForDrop(String x, int y){
         //Point finalPoint;
         int z;
         x = x.toUpperCase(Locale.ROOT);
